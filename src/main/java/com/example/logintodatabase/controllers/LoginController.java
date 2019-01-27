@@ -9,14 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
 public class LoginController {
 
-
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @GetMapping("/login-form")
     public String loginForm(Model model){
@@ -24,10 +24,12 @@ public class LoginController {
         return "login-form";
     }
 
-    @PostMapping("login-form")
+    @PostMapping("/login-form")
+    @ResponseBody
     public String getUser(@ModelAttribute User user){
-
-
-        return null;
+        if(userService.login(user)){
+            return "login correct";
+        }
+        return "bad login or password";
     }
 }

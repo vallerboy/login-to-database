@@ -12,6 +12,7 @@ public class User {
     private LocalDateTime time;
 
     public User() {
+
     }
 
     public Integer getId() {
