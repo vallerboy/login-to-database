@@ -12,13 +12,24 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void addUser(User user){
+    //boolean or enum
+
+    /**
+     *
+     * @param user
+     * @return return true if user was added correctly, and false otherwise
+     */
+    public boolean addUser(User user){
+        if(!isUsernameFree(user.getName())){
+            return false;
+        }
         userRepository.save(new UserToUserEntityMapper().map(user));
+        return true;
     }
 
-    public boolean checkIfUsernameIsFree(User user){
-        userRepository.existsByName(user.getName());
-        return false;
+    private boolean isUsernameFree(String nick){
+       return !userRepository.existsByName(nick);
     }
+
 
 }

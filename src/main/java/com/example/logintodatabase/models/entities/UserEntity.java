@@ -7,9 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_table")
 public class UserEntity {
-    @Id
-    @GeneratedValue()
-    private Integer id;
+    @Id @GeneratedValue private Integer id;
     private String name;
     private String password;
     private @Column(name = "entry_date") LocalDateTime time;

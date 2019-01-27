@@ -21,13 +21,13 @@ public class AddUserController {
         model.addAttribute("user",new User());
         return "add-user";
     }
+
     @PostMapping("add-user")
     @ResponseBody
     public String getUser(@ModelAttribute User user){
-
-        userService.addUser(user);
-
+        if (!userService.addUser(user)) {
+            return "username is busy";
+        }
         return "Thank you!!";
-
     }
 }

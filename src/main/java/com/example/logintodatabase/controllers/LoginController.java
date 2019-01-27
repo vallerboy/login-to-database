@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class LoginController {
 
-   // @Autowired
-    //UserService userService;
 
     @Autowired
     UserRepository userRepository;
@@ -25,23 +23,11 @@ public class LoginController {
         model.addAttribute("user",new User());
         return "login-form";
     }
-    @PostMapping("login-form")
 
+    @PostMapping("login-form")
     public String getUser(@ModelAttribute User user){
 
-        String result = "login-failed";
 
-
-
-
-        if(userRepository.existsByNameAndPassword(user.getName(),user.getPassword())){
-            result = "login-succes";
-        }
-        if(!userRepository.existsByName(user.getName())){
-            result = "invalid-user";
-        }
-
-        return result;
-
+        return null;
     }
 }

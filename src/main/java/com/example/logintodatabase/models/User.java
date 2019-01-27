@@ -6,10 +6,6 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class User {
-
-
-    @Id
-    @GeneratedValue
     private Integer id;
     private String name;
     private String password;
