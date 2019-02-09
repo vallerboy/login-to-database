@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thyemeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,7 +7,7 @@
 <body>
 <div style="text-align: center;">
     <ul>
-        <li th:each="contact : ${contacts.getContent()}" th:text="${contact.getPhone()}"></li>
+        <li th:each="contact : ${contacts.getContent()}" th:text="${contact.getName() + ': ' + contact.getPhone()}"></li>
     </ul>
 
     <a th:each="number: ${#numbers.sequence(0, contacts.getTotalPages() - 1)}" th:href="@{'/' + ${number}}" th:text="${number + ' '}"></a>
