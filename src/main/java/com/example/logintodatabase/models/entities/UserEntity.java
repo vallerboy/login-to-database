@@ -18,6 +18,6 @@ public class UserEntity {
     private String password;
     private @Column(name = "entry_date") LocalDateTime time;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    List<ContactEntity> contacts;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    List<ContactEntity> contacts;
 }

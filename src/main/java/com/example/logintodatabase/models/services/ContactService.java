@@ -7,6 +7,7 @@ import com.example.logintodatabase.models.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +15,24 @@ import java.util.List;
 @Service
 public class ContactService {
 
-    @Autowired
+
     ContactRepository contactRepository;
+    UserSession userSession;
+    final
+    UserService userService;
 
     @Autowired
-    UserSession userSession;
+    public ContactService(ContactRepository contactRepository, UserSession userSession, UserService userService) {
+        this.contactRepository = contactRepository;
+        this.userSession = userSession;
+        this.userService = userService;
+    }
 
     public Page<ContactEntity> getAllContactsForLoginUser(int page){
         if(!userSession.isLogin()){
             throw new IllegalStateException("user not login");
         }
-        return contactRepository.findByUser(userSession.getUserEntity(), PageRequest.of(page, 2));
+        return contactRepository.findByUser(userSession.getUserEntity(), PageRequest.of(page, 2, Sort.by("id").descending()));
     }
 
     public void addContact(AddContactForm addContactForm) {
@@ -32,5 +40,17 @@ public class ContactService {
         contactEntity.setUser(userSession.getUserEntity());
 
         contactRepository.save(contactEntity);
+    }
+
+    public void deleteContact(int id) {
+        if(!userSession.isLogin()){
+            return;
+        }
+
+        if(!contactRepository.existsByUser_IdAndId(userSession.getUserEntity().getId(), id)){
+            return;
+        }
+
+        contactRepository.deleteById(id);
     }
 }

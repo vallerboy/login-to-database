@@ -7,7 +7,10 @@
 <body>
 <div style="text-align: center;">
     <ul>
-        <li th:each="contact : ${contacts.getContent()}" th:text="${contact.getName() + ': ' + contact.getPhone()}"></li>
+        <li th:each="contact : ${contacts.getContent()}">
+            <span th:text="${contact.getName() + ': ' + contact.getPhone()}"></span>
+            <a th:href="@{'/contact/delete/' + ${contact.getId()}}">Usuń</a>
+        </li>
     </ul>
 
     <a th:each="number: ${#numbers.sequence(0, contacts.getTotalPages() - 1)}" th:href="@{'/' + ${number}}" th:text="${number + ' '}"></a>

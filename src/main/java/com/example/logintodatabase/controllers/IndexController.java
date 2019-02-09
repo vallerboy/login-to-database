@@ -30,7 +30,9 @@ public class IndexController {
         if(!userSession.isLogin()){
             return "redirect:/login-form";
         }
+
         model.addAttribute("contacts", contactService.getAllContactsForLoginUser(0));
+        System.out.println("WIELKSOC KOLEKCJI: " + userSession.getUserEntity().getContacts().size());
         return "index";
     }
 
