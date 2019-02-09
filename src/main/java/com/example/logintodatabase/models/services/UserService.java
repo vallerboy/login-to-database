@@ -1,12 +1,14 @@
 package com.example.logintodatabase.models.services;
 
 import com.example.logintodatabase.models.User;
+import com.example.logintodatabase.models.entities.ContactEntity;
 import com.example.logintodatabase.models.entities.UserEntity;
 import com.example.logintodatabase.models.mappers.UserToUserEntityMapper;
 import com.example.logintodatabase.models.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -57,5 +59,20 @@ public class UserService {
         }
         return false;
     }
+//
+//    @Transactional
+//    public void test() {
+//        Optional<UserEntity> userEntity = userRepository.findById(userSession.getUserEntity().getId());
+//        UserEntity withoutOptional = userEntity.get();
+//
+//        ContactEntity contactEntity = new ContactEntity();
+//        contactEntity.setEmail("asd");
+//        contactEntity.setSurname("asdasd");
+//        contactEntity.setName("asdasdsad");
+//        contactEntity.setPhone("213213213");
+//        contactEntity.setUser(withoutOptional);
+//
+//        withoutOptional.getContacts().add(contactEntity);
+//    }
 
 }

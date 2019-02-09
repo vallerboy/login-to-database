@@ -25,11 +25,10 @@ public class LoginController {
     }
 
     @PostMapping("/login-form")
-    @ResponseBody
     public String getUser(@ModelAttribute User user){
         if(userService.login(user)){
-            return "login correct";
+            return "redirect:/";
         }
-        return "bad login or password";
+        return "login-form";
     }
 }

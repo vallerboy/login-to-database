@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +18,6 @@ public class UserEntity {
     private String password;
     private @Column(name = "entry_date") LocalDateTime time;
 
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<ContactEntity> contacts;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    List<ContactEntity> contacts;
 }
