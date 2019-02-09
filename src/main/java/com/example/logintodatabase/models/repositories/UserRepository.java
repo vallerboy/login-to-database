@@ -12,6 +12,6 @@ public interface UserRepository extends CrudRepository<UserEntity,Integer> {
     boolean existsByName(String name);
 
     //query by SQL
-    @Query(value = "SELECT * FROM `user` WHERE `name` = ?1 AND `password` = ?2", nativeQuery = true)
-    Optional<UserEntity> getUserByUsernameAndPassword(String username, String password);
+    @Query(value = "SELECT * FROM `user` WHERE `name` = ?1", nativeQuery = true)
+    Optional<UserEntity> getUserByUsername(String username);
 }

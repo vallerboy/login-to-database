@@ -20,6 +20,9 @@ public class UserService {
     HashService hashService;
     //boolean or enum
 
+    @Autowired
+    UserSession userSession;
+
 
     /**
      *
@@ -40,12 +43,19 @@ public class UserService {
        return !userRepository.existsByName(nick);
     }
 
+
     public boolean login(User user){
         Optional<UserEntity> userWitchTryToLogin =
-                userRepository.getUserByUsernameAndPassword(user.getName(), hashService.hashPassword(user.getPassword()));
+                userRepository.getUserByUsername(user.getName());
         //tutaj odbedzie sie zapis do ciasteczka usera i ogolnei zapis usera zalogowanego
+        if (userWitchTryToLogin.isPresent() &&
+                hashService.isPasswordCorrect(userWitchTryToLogin.get().getPassword(), user.getPassword())) {
 
-        return userWitchTryToLogin.isPresent();
+            userSession.setLogin(true);
+            userSession.setUserEntity(userWitchTryToLogin.get());
+            return true;
+        }
+        return false;
     }
 
 }
