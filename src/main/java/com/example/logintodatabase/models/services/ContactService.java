@@ -47,10 +47,12 @@ public class ContactService {
             return;
         }
 
-        if(!contactRepository.existsByUser_IdAndId(userSession.getUserEntity().getId(), id)){
-            return;
-        }
+        if (!isLoginUserOwnerOfContactWithId(id)) return;
 
         contactRepository.deleteById(id);
+    }
+
+    public boolean isLoginUserOwnerOfContactWithId(int id) {
+        return contactRepository.existsByUser_IdAndId(userSession.getUserEntity().getId(), id);
     }
 }

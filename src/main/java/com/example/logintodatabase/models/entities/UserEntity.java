@@ -13,11 +13,27 @@ import java.util.Objects;
 @Table(name = "user")
 @Data
 public class UserEntity {
+    public enum AccountStatus {
+        ACTIVATED, NOT_ACTIVATED, BANNED;
+    }
+
     @Id @GeneratedValue private Integer id;
     private String name;
     private String password;
     private @Column(name = "entry_date") LocalDateTime time;
 
-//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    List<ContactEntity> contacts;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = {})
+    List<ContactEntity> contacts;
+
+    @Column(name = "account_status")
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus;
+
+
+//    @PreRemove
+//    public void prepareRemove() {
+//        for (int i = 0; i < contacts.size(); i++) {
+//            contacts.get(i).setUser(null);
+//        }
+//    }
 }

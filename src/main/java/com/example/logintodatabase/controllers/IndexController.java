@@ -32,7 +32,7 @@ public class IndexController {
         }
 
         model.addAttribute("contacts", contactService.getAllContactsForLoginUser(0));
-        System.out.println("WIELKSOC KOLEKCJI: " + userSession.getUserEntity().getContacts().size());
+        model.addAttribute("accountStatus", userSession.getUserEntity().getAccountStatus());
         return "index";
     }
 

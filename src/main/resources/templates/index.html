@@ -6,6 +6,7 @@
 </head>
 <body>
 <div style="text-align: center;">
+    <h1 th:text="${accountStatus}"></h1>
     <ul>
         <li th:each="contact : ${contacts.getContent()}">
             <span th:text="${contact.getName() + ': ' + contact.getPhone()}"></span>

@@ -16,5 +16,5 @@ public class ContactEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity user; //
 }
