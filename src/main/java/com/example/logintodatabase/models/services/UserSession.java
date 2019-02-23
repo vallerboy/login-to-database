@@ -13,4 +13,11 @@ import org.springframework.stereotype.Service;
 public class UserSession {
     private boolean isLogin;
     private UserEntity userEntity; //todo remove this in the future (cause hibernate proxy)
+
+
+
+    public void logout() {
+        isLogin = false;
+        userEntity = null;
+    }
 }

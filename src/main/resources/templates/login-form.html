@@ -6,6 +6,14 @@
 </head>
 <body>
 <div align="center">
+
+    <th:block th:if="${loginResponse != null}" th:switch="${loginResponse}">
+        <span th:case="${loginResponse.BAD_CREDENTIALS}" th:text="#{Login.bad.credentails}"></span>
+        <span th:case="${loginResponse.ACCOUNT_NOT_ACTIVATED}"  th:text="#{Login.account.not.activated}"></span>
+        <span th:case="${loginResponse.BANNED}"  th:text="#{Login.account.banned}"></span>
+    </th:block>
+
+
     <h1>Login</h1>
     <form action="#" th:action="@{/login-form}" th:object="${user}" method="post">
         <p> Username: <input type="text" th:field="*{name}"></p>

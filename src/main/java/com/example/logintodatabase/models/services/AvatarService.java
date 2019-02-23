@@ -23,7 +23,7 @@ public class AvatarService {
     }
 
     public boolean uploadAvatar(MultipartFile avatar, int contactId){
-        if(!isFileCorrect(avatar) && contactService.isLoginUserOwnerOfContactWithId(contactId)){
+        if(!isFileCorrect(avatar) && !contactService.isLoginUserOwnerOfContactWithId(contactId)){
             return false;
         }
 
@@ -35,11 +35,32 @@ public class AvatarService {
         return true;
     }
 
+    public boolean deleteAvatar(int contactId){
+         if(!contactService.isLoginUserOwnerOfContactWithId(contactId)){
+             return false;
+         }
+
+        try {
+            deleteAvatarResource(contactId);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void deleteAvatarResource(int contactId) throws IOException {
+        Files.delete(getPath(contactId));
+    }
+
     private void copyAvatarToResourceFolder(MultipartFile avatar, int contactId) throws IOException {
-        Path pathToAvatar = Paths.get(PATH_TO_AVATARS + File.separator + contactId);
+        Path pathToAvatar = getPath(contactId);
         createFileIfNotExist(pathToAvatar);
 
         Files.write(pathToAvatar, avatar.getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    private Path getPath(int contactId) {
+        return Paths.get(PATH_TO_AVATARS + File.separator + contactId);
     }
 
     private void createFileIfNotExist(Path pathToAvatar) throws IOException {
@@ -58,7 +79,7 @@ public class AvatarService {
     }
 
     private boolean checkFileFormat(MultipartFile avatar) {
-        return avatar.getContentType() != null && (avatar.getContentType().contains("png") || avatar.getContentType().contains("jpg"));
+        return avatar.getContentType() != null && (avatar.getContentType().contains("png") || avatar.getContentType().contains("image"));
     }
 
 

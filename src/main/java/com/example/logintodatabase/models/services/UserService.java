@@ -13,6 +13,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    public enum LoginResponse {
+        BANNED, SUCCESS, BAD_CREDENTIALS, ACCOUNT_NOT_ACTIVATED;
+    }
+
 
     @Autowired
     UserRepository userRepository;
@@ -46,18 +50,23 @@ public class UserService {
     }
 
 
-    public boolean login(User user){
+    public LoginResponse login(User user){
         Optional<UserEntity> userWitchTryToLogin =
                 userRepository.getUserByUsername(user.getName());
-        //tutaj odbedzie sie zapis do ciasteczka usera i ogolnei zapis usera zalogowanego
-        if (userWitchTryToLogin.isPresent() &&
-                hashService.isPasswordCorrect(userWitchTryToLogin.get().getPassword(), user.getPassword())) {
 
-            userSession.setLogin(true);
-            userSession.setUserEntity(userWitchTryToLogin.get());
-            return true;
+        if(!userWitchTryToLogin.isPresent() || !hashService.isPasswordCorrect(userWitchTryToLogin.get().getPassword(), user.getPassword())){
+            return LoginResponse.BAD_CREDENTIALS;
         }
-        return false;
+        if(userWitchTryToLogin.get().getAccountStatus() == UserEntity.AccountStatus.BANNED){
+            return LoginResponse.BANNED;
+        }else if(userWitchTryToLogin.get().getAccountStatus() == UserEntity.AccountStatus.NOT_ACTIVATED){
+            return LoginResponse.ACCOUNT_NOT_ACTIVATED;
+        }
+
+
+        userSession.setLogin(true);
+        userSession.setUserEntity(userWitchTryToLogin.get());
+        return LoginResponse.SUCCESS;
     }
 
 
