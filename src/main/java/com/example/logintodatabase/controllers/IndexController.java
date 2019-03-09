@@ -53,4 +53,8 @@ public class IndexController {
         model.addAttribute("contacts", pageObject);
         return "index";
     }
+
+    public UserSession getUserSession(){
+        return userSession;
+    }
 }

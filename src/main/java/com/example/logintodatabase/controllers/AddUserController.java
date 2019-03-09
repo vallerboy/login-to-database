@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AddUserController {
 
-    @Autowired
+    final
     UserService userService;
+
+    @Autowired
+    public AddUserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/add-user")
     public String loginForm(Model model){
@@ -22,9 +27,10 @@ public class AddUserController {
         return "add-user";
     }
 
-    @PostMapping("add-user")
+    @PostMapping("/add-user")
     @ResponseBody
     public String getUser(@ModelAttribute User user){
+        System.out.println(user);
         if (!userService.addUser(user)) {
             return "username is busy";
         }

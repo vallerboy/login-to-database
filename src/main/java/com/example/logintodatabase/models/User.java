@@ -47,6 +47,7 @@ public class User {
         this.time = time;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,15 +62,5 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, password, time);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", time=" + time +
-                '}';
     }
 }
